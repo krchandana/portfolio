@@ -34,20 +34,55 @@ function typeEffect() {
 }
 
 if (contactForm) {
-    contactForm.addEventListener('submit', function (event) {
+    contactForm.addEventListener('submit', async function (event) {
         event.preventDefault();
         const status = document.getElementById('form-status');
         const name = document.getElementById('name').value.trim();
         const email = document.getElementById('email').value.trim();
         const message = document.getElementById('message').value.trim();
-        const subject = encodeURIComponent(`Portfolio contact from ${name}`);
-        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=krchandana2004@gmail.com&su=${subject}&body=${body}`;
-
-        window.open(gmailUrl, '_blank');
+        const submitButton = contactForm.querySelector('button[type="submit"]');
 
         if (status) {
-            status.textContent = 'Gmail is opening. Please press Send there.';
+            status.textContent = 'Sending your message...';
+        }
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+        }
+
+        try {
+            const response = await fetch('https://formsubmit.co/ajax/krchandana2004@gmail.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    message,
+                    _subject: `Portfolio contact from ${name}`,
+                    _captcha: false
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Message could not be sent');
+            }
+
+            contactForm.reset();
+            if (status) {
+                status.textContent = 'Message sent successfully. Thank you!';
+            }
+        } catch (error) {
+            if (status) {
+                status.textContent = 'Unable to send right now. Please email me directly at krchandana2004@gmail.com.';
+            }
+        } finally {
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Message';
+            }
         }
     });
 }
