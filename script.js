@@ -37,14 +37,20 @@ if (contactForm) {
     contactForm.addEventListener('submit', function (event) {
         event.preventDefault();
         const status = document.getElementById('form-status');
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        const subject = encodeURIComponent(`Portfolio contact from ${name}`);
+        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+
+        window.location.href = `mailto:krchandana2004@gmail.com?subject=${subject}&body=${body}`;
+
         if (status) {
-            status.textContent = 'Thank you! Your message has been received.';
+            status.textContent = 'Your email app is opening. Please press Send there.';
         }
-        contactForm.reset();
     });
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    loadTheme();
     typeEffect();
 });
