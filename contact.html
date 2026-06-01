@@ -29,7 +29,11 @@
                 <a href="www.linkedin.com/in/chandana-kr-chandana-kr-3a1a26289" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             </div>
         </div>
-        <form id="contact-form" class="contact-form">
+        <iframe name="contact-submit-frame" class="contact-submit-frame" title="Contact form submission"></iframe>
+        <form id="contact-form" class="contact-form" action="https://flowform.to/submit" method="POST" target="contact-submit-frame">
+            <input type="hidden" name="_to" value="krchandana2004@gmail.com">
+            <input type="hidden" name="_subject" value="Portfolio contact from website">
+            <input type="hidden" name="_replyto" id="replyto" value="">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
             <label for="email">Email</label>

@@ -37,11 +37,34 @@ if (contactForm) {
     contactForm.addEventListener('submit', function (event) {
         event.preventDefault();
         const status = document.getElementById('form-status');
-        contactForm.reset();
+        const email = document.getElementById('email').value.trim();
+        const replyTo = document.getElementById('replyto');
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+
+        if (replyTo) {
+            replyTo.value = email;
+        }
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+        }
 
         if (status) {
-            status.textContent = 'Thank you for your message.';
+            status.textContent = 'Sending your message...';
         }
+
+        contactForm.submit();
+
+        setTimeout(() => {
+            contactForm.reset();
+            if (status) {
+                status.textContent = 'Message sent successfully. Thank you!';
+            }
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Message';
+            }
+        }, 1200);
     });
 }
 
