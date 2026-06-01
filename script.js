@@ -51,24 +51,20 @@ if (contactForm) {
         }
 
         try {
-            const response = await fetch('https://formsubmit.co/ajax/krchandana2004@gmail.com', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json'
-                },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    message,
-                    _subject: `Portfolio contact from ${name}`,
-                    _captcha: false
-                })
+            const formData = new URLSearchParams({
+                _to: 'krchandana2004@gmail.com',
+                _subject: `Portfolio contact from ${name}`,
+                _replyto: email,
+                name,
+                email,
+                message
             });
 
-            if (!response.ok) {
-                throw new Error('Message could not be sent');
-            }
+            await fetch('https://flowform.to/submit', {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            });
 
             contactForm.reset();
             if (status) {
