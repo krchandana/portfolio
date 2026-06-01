@@ -42,11 +42,12 @@ if (contactForm) {
         const message = document.getElementById('message').value.trim();
         const subject = encodeURIComponent(`Portfolio contact from ${name}`);
         const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=krchandana2004@gmail.com&su=${subject}&body=${body}`;
 
-        window.location.href = `mailto:krchandana2004@gmail.com?subject=${subject}&body=${body}`;
+        window.open(gmailUrl, '_blank');
 
         if (status) {
-            status.textContent = 'Your email app is opening. Please press Send there.';
+            status.textContent = 'Gmail is opening. Please press Send there.';
         }
     });
 }
