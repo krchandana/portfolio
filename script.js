@@ -34,51 +34,13 @@ function typeEffect() {
 }
 
 if (contactForm) {
-    contactForm.addEventListener('submit', async function (event) {
+    contactForm.addEventListener('submit', function (event) {
         event.preventDefault();
         const status = document.getElementById('form-status');
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const message = document.getElementById('message').value.trim();
-        const submitButton = contactForm.querySelector('button[type="submit"]');
+        contactForm.reset();
 
         if (status) {
-            status.textContent = 'Sending your message...';
-        }
-        if (submitButton) {
-            submitButton.disabled = true;
-            submitButton.textContent = 'Sending...';
-        }
-
-        try {
-            const formData = new URLSearchParams({
-                _to: 'krchandana2004@gmail.com',
-                _subject: `Portfolio contact from ${name}`,
-                _replyto: email,
-                name,
-                email,
-                message
-            });
-
-            await fetch('https://flowform.to/submit', {
-                method: 'POST',
-                mode: 'no-cors',
-                body: formData
-            });
-
-            contactForm.reset();
-            if (status) {
-                status.textContent = 'Message sent successfully. Thank you!';
-            }
-        } catch (error) {
-            if (status) {
-                status.textContent = 'Unable to send right now. Please email me directly at krchandana2004@gmail.com.';
-            }
-        } finally {
-            if (submitButton) {
-                submitButton.disabled = false;
-                submitButton.textContent = 'Send Message';
-            }
+            status.textContent = 'Thank you for your message.';
         }
     });
 }
